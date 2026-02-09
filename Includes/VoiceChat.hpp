@@ -8,6 +8,6 @@
 namespace CTRPluginFramework
 {
     using StringVector = std::vector<std::string>;
-
+    
 }
 #endif
