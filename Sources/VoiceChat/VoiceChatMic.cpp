@@ -56,7 +56,9 @@ namespace CTRPluginFramework
         std::memset(&dest, 0, sizeof(dest));
         dest.sin_family = AF_INET;
         dest.sin_port = htons(0x1234);
-        dest.sin_addr.s_addr = INADDR_BROADCAST;
+        dest.sin_addr.s_addr = _server_ip.empty()
+            ? (in_addr_t)INADDR_BROADCAST
+            : inet_addr(_server_ip.c_str());
         _socket.SendTo(_tx_buffer.Ptr(), to_send, &dest);
     }
 }
