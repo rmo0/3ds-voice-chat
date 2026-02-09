@@ -1,6 +1,6 @@
 .vscode
 Build
-demo
+temp
 
 *.3gx
 *.elf
