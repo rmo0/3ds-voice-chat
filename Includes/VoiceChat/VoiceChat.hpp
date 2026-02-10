@@ -14,7 +14,7 @@ namespace CTRPluginFramework
     class VoiceChat
     {
     public:
-        VoiceChat() : _running(false), _ptt_pressed(false) {}
+        VoiceChat() : _running(false), _ptt_pressed(false), _soc_context_owned(true) {}
 
         bool Init();
         void Exit();
@@ -31,6 +31,7 @@ namespace CTRPluginFramework
         bool _ptt_pressed;
 
         SvcBuffer _soc_context;
+        bool _soc_context_owned;
         SvcBuffer _mic_buffer;
         SvcBuffer _tx_buffer;
         SvcBuffer _rx_buffer;
