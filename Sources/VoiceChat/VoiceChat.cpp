@@ -1,4 +1,5 @@
 #include "VoiceChat/VoiceChat.hpp"
+#include "Patches.hpp"
 #include "ncsnd.h"
 #include <3ds.h>
 #include "csvc.h"
@@ -15,28 +16,44 @@ namespace CTRPluginFramework
 
     bool VoiceChat::Init()
     {
-        if (!_soc_context.Alloc(k_soc_context_size))
-            return false;
+        void *soc_ctx = GetSocContext();
+        u32 soc_size = GetSocContextSize();
+        if (!soc_ctx || soc_size == 0)
+        {
+            if (!_soc_context.Alloc(k_soc_context_size))
+                return false;
+            soc_ctx = _soc_context.Ptr();
+            soc_size = _soc_context.size;
+            _soc_context_owned = true;
+        }
+        else
+        {
+            _soc_context_owned = false;
+        }
+
         if (!_mic_buffer.Alloc(k_mic_buffer_size))
         {
-            _soc_context.Free();
+            if (_soc_context_owned)
+                _soc_context.Free();
             return false;
         }
         if (!_tx_buffer.Alloc(k_tx_buffer_size))
         {
             _mic_buffer.Free();
-            _soc_context.Free();
+            if (_soc_context_owned)
+                _soc_context.Free();
             return false;
         }
         if (!_rx_buffer.Alloc(k_rx_buffer_size))
         {
             _tx_buffer.Free();
             _mic_buffer.Free();
-            _soc_context.Free();
+            if (_soc_context_owned)
+                _soc_context.Free();
             return false;
         }
 
-        if (!_socket.Init(_soc_context.Ptr(), _soc_context.size))
+        if (!_socket.Init(soc_ctx, soc_size))
         {
             Exit();
             return false;
@@ -70,7 +87,8 @@ namespace CTRPluginFramework
         _rx_buffer.Free();
         _tx_buffer.Free();
         _mic_buffer.Free();
-        _soc_context.Free();
+        if (_soc_context_owned)
+            _soc_context.Free();
     }
 
     bool VoiceChat::Start()
