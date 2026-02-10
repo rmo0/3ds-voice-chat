@@ -1,6 +1,6 @@
 #include "Memory/SvcBuffer.hpp"
-#include "csvc.h"
 #include <3ds.h>
+#include "csvc.h"
 
 namespace CTRPluginFramework
 {
@@ -18,7 +18,7 @@ namespace CTRPluginFramework
             return false;
         size_bytes = align_up(size_bytes, 0x1000);
         u32 out = 0;
-        Result r = svcControlMemoryUnsafe(&out, 0, size_bytes, MEMOP_ALLOC, (MemPerm)(MEMPERM_READ | MEMPERM_WRITE));
+        Result r = svcControlMemoryUnsafe(&out, 0, size_bytes, (MemOp)(MEMOP_REGION_SYSTEM | MEMOP_ALLOC), (MemPerm)(MEMPERM_READ | MEMPERM_WRITE));
         if (R_FAILED(r))
             return false;
         addr = out;
