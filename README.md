@@ -58,6 +58,9 @@ This project relies on the following libraries and templates. Thanks to the auth
 - **[libncsnd](https://github.com/PabloMK7/libncsnd)** ([PabloMK7](https://github.com/PabloMK7))  
   Library that provides an interface to the CSND service. Used here for audio playback when DSP is not available.
 
+- **Patches (soc hooks)** — [tekito_256](https://github.com/tekito-256) (tekito_256)  
+  Thanks for the implementation of `Patches.cpp` (socket service hooks for games that also use soc).
+
 ## License
 
 This project is licensed under the same license as [CTRPluginFramework](https://github.com/Nanquitas/CTRPluginFramework).  
