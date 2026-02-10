@@ -1,7 +1,6 @@
 #include "VoiceChat/VoiceChat.hpp"
 #include "ncsnd.h"
 #include <3ds.h>
-#include "csvc.h"
 
 namespace CTRPluginFramework
 {
@@ -15,7 +14,8 @@ namespace CTRPluginFramework
         if (recv_len <= 0)
             return;
 
-        svcFlushDataCacheRange(_rx_buffer.Ptr(), (u32)recv_len);
+        // socが直接書いた最新データをCPUに読ませるため
+        svcInvalidateProcessDataCache(CUR_PROCESS_HANDLE, (u32)_rx_buffer.Ptr(), (u32)recv_len);
 
         ncsndDirectSound sound;
         ncsndInitializeDirectSound(&sound);
