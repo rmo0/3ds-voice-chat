@@ -1,4 +1,5 @@
 #include "PluginHooks.hpp"
+#include "Patches.hpp"
 #include "VoiceChat/VoiceChat.hpp"
 #include "csvc.h"
 #include <3ds.h>
@@ -106,6 +107,7 @@ exit:
     {
         (void)settings;
         ToggleTouchscreenForceOn();
+        InitSocAndHooks();
     }
 
     void OnProcessExit(void)
@@ -115,6 +117,7 @@ exit:
             s_voice_chat.Exit();
             s_voice_inited = false;
         }
+        OnProcessExitSoc();
         ToggleTouchscreenForceOn();
     }
 
