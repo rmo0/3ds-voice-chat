@@ -34,11 +34,11 @@ It runs as a Luma3DS plugin: PTT (Push-to-Talk) sends mic audio over UDP, and re
    make
    ```
 
-   This produces `3ds-voice-chat.3gx`.
+   This produces `3ds-VoiceChat.3gx`.
 
 ## Usage
 
-1. Put the built `3ds-voice-chat.3gx` in the plugin folder on the 3DS SD card (e.g. `luma/plugins/<title ID>/`).
+1. Put the built `3ds-VoiceChat.3gx` in the plugin folder on the 3DS SD card (e.g. `luma/plugins/<title ID>/`).
 2. After starting the game, enable "Connect" in the plugin’s "Voice Chat" menu and optionally set the send destination with "Set server IP".
 3. Hold R and speak to send; the other side will hear it.
 
