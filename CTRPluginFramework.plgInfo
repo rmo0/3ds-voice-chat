@@ -5,6 +5,8 @@ Version: # Plugin version
     Minor: 7
     Revision: 2
 
+MemorySize: 10MiB
+
 Targets: # Low TitleId of games which are compatibles with this plugin (0 for all)
 
 Title: CTRPF - Blank Template
