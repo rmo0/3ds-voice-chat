@@ -42,6 +42,18 @@ It runs as a Luma3DS plugin: PTT (Push-to-Talk) sends mic audio over UDP, and re
 2. After starting the game, enable "Connect" in the plugin’s "Voice Chat" menu and optionally set the send destination with "Set server IP".
 3. Hold R and speak to send; the other side will hear it.
 
+## Troubleshooting
+
+- **CTRPF menu does not open after Init** — Try disabling "Connect" before opening the menu, or open the menu before enabling Connect.
+
+- **Same-PC connection (e.g. two Citra instances) stays "Waiting..."**
+  - Set different ports: Emulator A: My Port 4660, Server 127.0.0.1:4661; Emulator B: My Port 4661, Server 127.0.0.1:4660.
+  - If 127.0.0.1 does not work, try your PC's LAN IP (e.g. 192.168.1.x from `ipconfig`) instead of 127.0.0.1.
+
+## Contributing
+
+Issues and pull requests are welcome.
+
 ## Thanks / Libraries
 
 This project relies on the following libraries and templates. Thanks to the authors for developing and releasing them.
