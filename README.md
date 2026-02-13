@@ -1,13 +1,25 @@
 # 3ds-VoiceChat
 
 A voice chat plugin for Nintendo 3DS. It was built using CTRPF.
-It runs as a Luma3DS plugin: PTT (Push-to-Talk) sends mic audio over UDP, and received audio is played back via CSND.
+It runs as a Luma3DS plugin: PTT (Push-to-Talk) sends mic audio over TCP, and received audio is played back via CSND.
+
+## Completion Status
+
+**Incomplete**
+
+```
+[======>...] 70%
+```
+
+- Connection may be unstable on real hardware and Citra.
+- For same-PC (e.g. two Citra instances), connection may remain at "Waiting..." depending on the environment.
 
 ## Features
 
-- **PTT send**: While holding R, mic input is sent over UDP
+- **PTT send**: While holding R, mic input is sent over TCP
 - **Receive & play**: Received PCM is played with libncsnd (CSND)
-- **Server IP**: Send destination can be set from the menu (broadcast IP when not set)
+- **Host / Connect**: TCP client-server model. One instance hosts, the other connects.
+- **IP:Port**: Set the address for hosting (bind) or connecting (server destination).
 
 ## Requirements
 
@@ -39,16 +51,19 @@ It runs as a Luma3DS plugin: PTT (Push-to-Talk) sends mic audio over UDP, and re
 ## Usage
 
 1. Put the built `3ds-VoiceChat.3gx` in the plugin folder on the 3DS SD card (e.g. `luma/plugins/<title ID>/`).
-2. After starting the game, enable "Connect" in the plugin’s "Voice Chat" menu and optionally set the send destination with "Set server IP".
-3. Hold R and speak to send; the other side will hear it.
+2. Set IP:Port (e.g. `127.0.0.1:4660` for same-PC, or your LAN IP for network).
+3. One instance: select **Host** (binds and waits for connection).
+4. Other instance: select **Connect** (connects to the host).
+5. When connected, hold R and speak to send; the other side will hear it.
 
 ## Troubleshooting
 
-- **CTRPF menu does not open after Init** — Try disabling "Connect" before opening the menu, or open the menu before enabling Connect.
+- **CTRPF menu does not open after Init** — Try disabling the connection before opening the menu, or open the menu before enabling Host/Connect.
 
-- **Same-PC connection (e.g. two Citra instances) stays "Waiting..."**
-  - Set different ports: Emulator A: My Port 4660, Server 127.0.0.1:4661; Emulator B: My Port 4661, Server 127.0.0.1:4660.
-  - If 127.0.0.1 does not work, try your PC's LAN IP (e.g. 192.168.1.x from `ipconfig`) instead of 127.0.0.1.
+- **Same-PC connection (e.g. two Citra instances)**  
+  - Host: Set IP:Port to `127.0.0.1:4660` (or `0.0.0.0:4660`), then select Host.
+  - Connect: Set IP:Port to `127.0.0.1:4660`, then select Connect.
+  - If 127.0.0.1 does not work, try your PC's LAN IP (e.g. 192.168.1.x from `ipconfig`).
 
 ## Contributing
 
@@ -77,7 +92,3 @@ This project relies on the following libraries and templates. Thanks to the auth
 
 This project is licensed under the same license as [CTRPluginFramework](https://github.com/Nanquitas/CTRPluginFramework).  
 For the libraries and templates listed above, see their respective repositories for license information.
-
----
-
-The English translation of this README was produced with the help of GAI.
