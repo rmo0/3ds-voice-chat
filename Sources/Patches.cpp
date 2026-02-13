@@ -72,7 +72,12 @@ namespace CTRPluginFramework
             return true;
 
         if (System::IsCitra())
-            return false;
+        {
+            if (R_FAILED(socInit((u32 *)0, 0x20000)))
+                return false;
+            s_soc_inited_by_patches = true;
+            return true;
+        }
 
         u32 out_addr = 0;
         Result r = svcControlMemoryUnsafe(&out_addr, k_patches_sharedmem_addr, k_patches_sharedmem_size,
@@ -102,13 +107,16 @@ namespace CTRPluginFramework
         if (!s_soc_inited_by_patches)
             return;
         socExit();
-        svcControlMemoryUnsafe(nullptr, k_patches_sharedmem_addr, k_patches_sharedmem_size, MEMOP_FREE, (MemPerm)0);
+        if (!System::IsCitra())
+            svcControlMemoryUnsafe(nullptr, k_patches_sharedmem_addr, k_patches_sharedmem_size, MEMOP_FREE, (MemPerm)0);
         s_soc_inited_by_patches = false;
     }
 
     void *GetSocContext(void)
     {
-        return s_soc_inited_by_patches ? (void *)k_patches_sharedmem_addr : nullptr;
+        if (!s_soc_inited_by_patches)
+            return nullptr;
+        return System::IsCitra() ? (void *)1 : (void *)k_patches_sharedmem_addr;
     }
 
     u32 GetSocContextSize(void)
